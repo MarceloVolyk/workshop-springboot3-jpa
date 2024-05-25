@@ -9,8 +9,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 
 /*Basic entity chscklist:
  * -Basic attributes
@@ -35,7 +37,15 @@ public class Product implements Serializable {           //serializable
 	private Double price;
 	private String imgUrl;
 	
-	@Transient
+	//criando a tabela de associação "Muitos pra muitos (N pra N):
+	
+	@ManyToMany
+	@JoinTable(name = "tb_product_category",
+	joinColumns = @JoinColumn(name = "product_id"),         
+	inverseJoinColumns = @JoinColumn(name = "category_id")) 
+	//como uma tabela de associação possui apenas chaves estrangeiras, temos que especificar qual e qual,
+	//então o parâmetro "joinColumns" irá se referir à classe onde estamos fazendo o mapeamento do JPA,
+	//neste caso, Product, e o "inverseJoinColumns" irá se referir à outra classe da associação, neste caso, Category
 	private Set<Category> categories = new HashSet<>();   //associations (instantiate collections)
 	
 	public Product() {                          //constructors
