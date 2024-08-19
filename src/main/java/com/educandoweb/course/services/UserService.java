@@ -23,4 +23,8 @@ public class UserService {             //dependência em outra classe (UserResou
 		Optional<User> obj = repository.findById(id);
 		return obj.get();
 	}
+	
+	public User insert(User obj) {
+		return repository.save(obj);
+	}
 }
