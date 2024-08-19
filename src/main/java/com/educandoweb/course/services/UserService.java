@@ -27,4 +27,8 @@ public class UserService {             //dependência em outra classe (UserResou
 	public User insert(User obj) {
 		return repository.save(obj);
 	}
+	
+	public void delete(Long id) {
+		repository.deleteById(id);
+	}
 }
